@@ -1,10 +1,10 @@
 package com.example.jpademo;
 
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class Controller {
@@ -27,4 +27,14 @@ public class Controller {
     public User getUserById(@PathVariable String id) throws Exception{
         return repositoryUser.findById(id).orElseThrow(() -> new Exception("User not found"));
     }
+
+    @DeleteMapping("/user/{id}")
+    public User deleteUserById(@PathVariable String id) throws Exception{
+        User user = repositoryUser.findById(id).orElseThrow(() -> new Exception("User not found; so, it can't be deleted."));
+        repositoryUser.deleteById(user.getId());
+        return user;
+    }
+
+
+    // update
 }
