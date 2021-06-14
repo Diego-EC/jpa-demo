@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class Controller {
 
@@ -14,8 +16,8 @@ public class Controller {
     RepositoryUser repositoryUser;
 
     @GetMapping
-    public String getHola(){
-        return "Hello";
+    public List<User> getUsers(){
+        return repositoryUser.findAll();
     }
 
     @PostMapping
