@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class Controller {
@@ -35,6 +34,14 @@ public class Controller {
         return user;
     }
 
-
-    // update
+    @PutMapping("/user")
+    public String updateUser(@RequestBody User user) throws Exception{
+        User userToUpdate = repositoryUser.findById(user.getId()).orElseThrow(() -> new Exception("User not found; so, it can't be updated."));
+        // TODO: ¿hay una forma de detectar los cambios para no hacer set de todos los campos?
+        userToUpdate.setName(user.getName());
+        userToUpdate.setCity(user.getCity());
+        userToUpdate.setAge(user.getAge());
+        repositoryUser.save(userToUpdate);
+        return "User with id " + user.getId() + " updated";
+    }
 }
