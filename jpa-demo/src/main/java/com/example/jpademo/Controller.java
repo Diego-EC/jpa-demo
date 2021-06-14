@@ -2,10 +2,7 @@ package com.example.jpademo;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +21,10 @@ public class Controller {
     public User addUser(@RequestBody User user){
         repositoryUser.save(user);
         return user;
+    }
+
+    @GetMapping("/user/{id}")
+    public User getUserById(@PathVariable String id) throws Exception{
+        return repositoryUser.findById(id).orElseThrow(() -> new Exception("User not found"));
     }
 }
